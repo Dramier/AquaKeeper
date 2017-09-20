@@ -88,6 +88,7 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/public/login.html');
 });
 
+/*
 app.post('/login', function(req, res){
 	//console.log('Request: ' + JSON.stringify(req.body));
 	console.log('Authenticating user.');
@@ -142,7 +143,7 @@ app.post('/tanks', function(req, res){
 	  console.log('Tank: Hatchery');
   //console.log('Element 1: ' + req.body.element_1);
   
-  /*
+  
   console.log('Date month: ' + req.body.date_month);
   console.log('Date day: ' + req.body.date_day);
   console.log('Date year: ' + req.body.date_year);
@@ -157,7 +158,7 @@ app.post('/tanks', function(req, res){
   console.log('Nitrite: ' + req.body.tank_nitrite);
   console.log('Nitrate: ' + req.body.tank_nitrate);
   console.log('Temperature: ' + req.body.tank_temp + "F");
-  */
+  
 	
   //console.log('Rest of req: ');
   //console.log(req.body);
@@ -175,8 +176,9 @@ app.post('/tanks', function(req, res){
 	res.sendFile(__dirname + '/public/intro.html');
   
 });
+*/
 
-io.close();
+//io.close();
 
 //need to load in the user database
 // Read Synchrously
@@ -187,6 +189,15 @@ console.log("\n Reading in user database... \n");
 userDatabase = JSON.parse(userDatabase);
 userCount = userDatabase.Users.length;
 console.log('Number of users in database: ' + userCount);
+
+io.use(function(socket, next) {
+  var handshakeData = socket.request;
+  // make sure the handshake data looks good as before
+  // if error do this:
+    // next(new Error('not authorized'));
+  // else just call next
+  next();
+});
 
 io.on('connection', function(socket){
 
@@ -225,6 +236,7 @@ socket.on('reconnect_attempt', function(){
   socket.on('login', function(msg)
   {
 	  //do something
+	  conlogger.log('info', 'Socket login: ', socket.client.id);
 	  console.log("Received input msg: ");
 	  console.log(JSON.stringify(msg));
 	  
@@ -250,7 +262,7 @@ socket.on('reconnect_attempt', function(){
 			  
 			  console.log('Valid user detected!');
 			  //http.serveClient(__dirname + '/public/intro.html');
-			  socket.emit('move', 'do it');
+			  socket.emit('move', '/intro.html');
 			  
 			  //res.sendFile(__dirname + '/public/intro.html');
 			  return;
@@ -278,15 +290,53 @@ socket.on('reconnect_attempt', function(){
 	  return;
   });
   
-  socket.on('add tank', function(msg)
+  socket.on('select', function(msg)
   {
 	  //do something
+	  console.log("select: Received input msg: ");
+	  console.log(JSON.stringify(msg));
+	  
+	  if (msg.button1 == 1)
+	  {
+		  //load tanks
+	  }
+	  if (msg.button2 == 1)
+	  {
+		  //load fish
+	  }
+	  if (msg.button3 == 1)
+	  {
+		  //load add a tank
+		  console.log('Sending user to add a tank.');
+		  socket.emit('move', 'addtank.html');
+	  }
+	  if (msg.button4 == 1)
+	  {
+		  //load add a fish
+      }
+	  
+	  
+	  return;
+  });
+  
+  socket.on('addtank', function(msg)
+  {
+	  //do something
+	  conlogger.log('info', 'Socket add tank: ', socket.client.id);
 	  console.log("Received input msg: ");
 	  console.log(JSON.stringify(msg));
 	  
+	  console.log('User file: ' + userFile);
 	  
+	  /*
 	  
-	  
+	  fs.appendFile(userFile, JSON.stringify(msg.body), (err) => 
+	{
+		if (err) throw err;
+		console.log('Tank data saved.');
+	});
+	  */
+	  socket.emit('move', '/intro.html');
 	  return;
   });
   

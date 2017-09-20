@@ -7,17 +7,21 @@
 <script type="text/javascript" src="view.js"></script>
 
 </head>
+
 <body id="main_body" >
 	
+	
+	<ol id="test">
 	<img id="top" src="top.png" alt="">
 	<div id="form_container">
 	
 		<h1><a>Aqua Keeper</a></h1>
-		<form id="form_50219" class="appnitro"  method="post" action="/login">
+		<form id="login" class="appnitro"  method="post" action="">
 					<div class="form_description">
 			<h2>Aqua Keeper</h2>
 			<p>Keep your tanks up to date!</p>
 		</div>						
+			
 			<ul >
 			
 					<li id="li_1" >
@@ -44,14 +48,32 @@
 		</div>
 	</div>
 	<img id="bottom" src="bottom.png" alt="">
+	</ol>
+	
+	<script src="jquery-3.2.1.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	
+	<script src="/handler.js"></script>
+	
+	<script>
+			var form = document.getElementsByClassName('appnitro')[0];
+			form.addEventListener('submit', handleFormSubmit);
+	</script>
+	
 	<script>
 		var socket = io();
 		socket.on('move', (msg) => 
 		{
-			document.location.href = "/intro.html";
+			//document.location.href = "/intro.html";
+			//document.body.innerHTML = "/intro.html";
+			$( "#test" ).load( msg );
+			form = document.getElementsByClassName('appnitro')[0];
+			form.addEventListener('submit', handleFormSubmit);
+		
+			
+
 		});
 	</script>
-	<script src="/login_handler.js"></script>
+	
 	</body>
 </html>

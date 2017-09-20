@@ -8,6 +8,8 @@ const handleFormSubmit = event => {
   // Stop the form from submitting since we’re handling that with AJAX.
   event.preventDefault();
   
+  console.log('Submit intercepted.');
+  
   // TODO: Call our function to get the form data.
   const data = formToJSON(form.elements);
   
@@ -18,7 +20,9 @@ const handleFormSubmit = event => {
   //dataContainer.textContent = JSON.stringify(data, null, "  ");
   
   // ...this is where we’d actually do something with the form data...
-  socket.emit('chat message', data);
+  
+  socket.emit(form.id, data);
+  console.log('form action is: ' + form.id);
   /*
   , (data) => {
 			console.log(data); // data will be 'woot'
@@ -31,8 +35,11 @@ const handleFormSubmit = event => {
  * its class name, then attach the `handleFormSubmit()` function to the 
  * `submit` event.
  */
-const form = document.getElementsByClassName('appnitro')[0];
-form.addEventListener('submit', handleFormSubmit);
+
+//var form = document.getElementsByClassName('appnitro')[0];
+//form.addEventListener('submit', handleFormSubmit);
+console.log('Adding submit listener');
+
 
 /**
  * Retrieves input data from a form and returns it as a JSON object.
