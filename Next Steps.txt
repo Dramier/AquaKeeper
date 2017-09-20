@@ -1,0 +1,21 @@
+Next steps:
+
+	Get logging on a tank working
+	Get logging menu to populate drop down menu for tanks correctly
+	Add button to intro.html for:
+		Viewing tanks
+		Viewing fish
+	Build a fish database for tankmates function
+	Build a tank health button - examines PH and variables and sees if any fish are in danger
+	Get add a fish working
+	Add export buttons to all windows
+	Add tank/fish delete buttons
+	Add logout button
+	Add warnings about security, etc
+	Add required field to addtank menu on Tank name
+	Make user file list actually be checked
+	Add encryption to users.json file
+	Add interactive graph function
+	Add tank recommendations
+	Add tank predictive functions like selecting 50% water change results in X changes
+	

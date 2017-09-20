@@ -1,0 +1,54 @@
+setup: 9/7/2017
+fished: 8/26/2017
+planted: 7/10/2017
+cycled: 8/26/2017
+
+
+
+{
+	"tank_name": "Main Tank",
+	"tank_size": "20",
+	"date_setup_month": "9",
+	"date_setup_day": "7",
+	"date_setup_year": "2017",
+	"date_cycled_month": "8",
+	"date_cycled_day": "26",
+	"date_cycled_year": "2017",
+	"date_fished_month": "8",
+	"date_fished_dat": "26",
+	"date_fished_year": "2017",
+	"date_planted_month": "7",
+	"date_planted_day": "10",
+	"date_planted_year": "2017",
+	"option_cycled": ["1"],
+	"option_heated": ["1"],
+	"option_filtered": ["1"],
+	"option_fish": ["1"],
+	"option_plants": ["1"],
+	"option_substrate": ["1"],
+	"option_snails": ["1"],
+	"option_shrimp": ["1"],
+	"option_ferts": ["1"],
+	"tank_notes": "Main tank in computer room.",
+	"form_id": "50219",
+	"submit": "Submit"
+},{
+	"tank_name": "Hatchery",
+	"tank_size": "5",
+	"date_setup_month": "9",
+	"date_setup_day": "17",
+	"date_setup_year": "2017",
+	"date_cycled_month": "9",
+	"date_cycled_day": "17",
+	"date_cycled_year": "2017",
+	"date_planted_month": "9",
+	"date_planted_day": "17",
+	"date_planted_year": "2017",
+	"option_heated": ["1"],
+	"option_filtered": ["1"],
+	"option_plants": ["1"],
+	"option_ferts": ["1"],
+	"tank_notes": "Hatchery in kitchen.",
+	"form_id": "50219",
+	"submit": "Submit"
+}
