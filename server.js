@@ -210,7 +210,7 @@ io.on('connection', function(socket){
   //-
 	var userAuth = false;
 	var userFile = null;
-	var userData = null;
+	var userTanks = null;
   
   //-
   //-
@@ -248,11 +248,17 @@ socket.on('reconnect_attempt', function(){
 			  userFile = msg.user_name + ".tnk";
 			  if (fs.existsSync(userFile)) 
 			  {
-				userData = fs.readFileSync(userFile);
+				console.log('Reading in file: ' + userFile);
+				//var userData = fs.readFile(userFile, 'utf8');
+				userTanks = JSON.parse(require('fs').readFileSync(userFile, 'utf8'));
+				//userTanks = JSON.parse(userData);
+				console.log('userTanks: ');
+				console.log(userTanks);
 			  }
 			  else
 			  {
-				  fs.writeFile(userFile, '', function (err) 
+				  userTanks = {"Tanks": [{ "tank_name" : "empty" }]};
+				  fs.writeFile(userFile, JSON.stringify(userTanks), function (err) 
 				  {
 						if (err) return console.log(err);
 						console.log('Created new user file.');
@@ -330,16 +336,21 @@ socket.on('reconnect_attempt', function(){
 	  
 	  console.log('User file: ' + userFile);
 	  
+	  //load the user file first
+	  //var UserTanks = fs.readFile(userFile);
 	  
-	  
-	  fs.appendFile(userFile, JSON.stringify(msg), (err) => 
-	{
-		if (err) 
-		{
-			console.log('Error saving file');
-		}
-		console.log('Tank data saved.');
-	});
+	  if (userTanks.Tanks[0].tank_name == 'empty')
+	  {
+		  console.log('No tanks in file.');
+		  userTanks.Tanks[0] = msg;
+		  fs.writeFile(userFile, JSON.stringify(userTanks))
+	  }
+	  else
+	  {
+		  console.log('File contains tanks already!');
+		  userTanks.Tanks[userTanks.Tanks.length] = msg;
+		  fs.writeFile(userFile, JSON.stringify(userTanks))
+	  }
 	  
 	  socket.emit('move', '/intro.html');
 	  return;
