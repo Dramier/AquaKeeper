@@ -299,6 +299,8 @@ socket.on('reconnect_attempt', function(){
 	  if (msg.button1 == 1)
 	  {
 		  //load tanks
+		  console.log('Sending user to log a tank.');
+		  socket.emit('move', 'logtanks.html');
 	  }
 	  if (msg.button2 == 1)
 	  {
@@ -328,14 +330,17 @@ socket.on('reconnect_attempt', function(){
 	  
 	  console.log('User file: ' + userFile);
 	  
-	  /*
 	  
-	  fs.appendFile(userFile, JSON.stringify(msg.body), (err) => 
+	  
+	  fs.appendFile(userFile, JSON.stringify(msg), (err) => 
 	{
-		if (err) throw err;
+		if (err) 
+		{
+			console.log('Error saving file');
+		}
 		console.log('Tank data saved.');
 	});
-	  */
+	  
 	  socket.emit('move', '/intro.html');
 	  return;
   });
