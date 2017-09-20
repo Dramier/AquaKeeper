@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Aqua Keeper</title>
+<link rel="stylesheet" type="text/css" href="view.css" media="all">
+<script type="text/javascript" src="view.js"></script>
+<script type="text/javascript" src="calendar.js"></script>
+</head>
+<body id="main_body" >
+	
+	<img id="top" src="top.png" alt="">
+	<div id="form_container">
+	
+		<h1><a>Aqua Keeper</a></h1>
+		<form id="form_50219" class="appnitro"  method="post" action="">
+					<div class="form_description">
+			<h2>Aqua Keeper</h2>
+			<p>Adding a new tank to your tracking.</p>
+		</div>						
+			<ul >
+			
+					<li id="li_1" >
+		<label class="description" for="tank_name">Tank Name </label>
+		<div>
+			<input id="tank_name" name="tank_name" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div><p class="guidelines" id="guide_1"><small>Enter a short descriptive name for this tank.</small></p> 
+		</li>		<li id="li_2" >
+		<label class="description" for="tank_size">Tank Size (gallons) </label>
+		<div>
+			<input id="tank_size" name="tank_size" class="element text medium" type="text" maxlength="255" value=""/> 
+		</div> 
+		</li>		<li id="li_3" >
+		<label class="description" for="element_3">Date Tank was setup </label>
+		<span>
+			<input id="date_setup_hour" name="date_setup_hour" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_setup_hour">MM</label>
+		</span>
+		<span>
+			<input id="date_setup_month" name="date_setup_month" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_setup_month">DD</label>
+		</span>
+		<span>
+	 		<input id="date_setup_year" name="date_setup_year" class="element text" size="4" maxlength="4" value="" type="text">
+			<label for="date_setup_year">YYYY</label>
+		</span>
+	
+		<span id="calendar_3">
+			<img id="cal_img_3" class="datepicker" src="calendar.gif" alt="Pick a date.">	
+		</span>
+		<script type="text/javascript">
+			Calendar.setup({
+			inputField	 : "date_setup_year",
+			baseField    : "element_3",
+			displayArea  : "calendar_3",
+			button		 : "cal_img_3",
+			ifFormat	 : "%B %e, %Y",
+			onSelect	 : selectDate
+			});
+		</script>
+		<p class="guidelines" id="guide_3"><small>This is when you setup the tank.</small></p> 
+		</li>		<li id="li_7" >
+		<label class="description" for="element_7">Date Tank was finished cycling. </label>
+		<span>
+			<input id="date_cycled_day" name="date_cycled_day" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_cycled_day">MM</label>
+		</span>
+		<span>
+			<input id="date_cycled_month" name="date_cycled_month" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_cycled_month">DD</label>
+		</span>
+		<span>
+	 		<input id="date_cycled_year" name="date_cycled_year" class="element text" size="4" maxlength="4" value="" type="text">
+			<label for="date_cycled_year">YYYY</label>
+		</span>
+	
+		<span id="calendar_7">
+			<img id="cal_img_7" class="datepicker" src="calendar.gif" alt="Pick a date.">	
+		</span>
+		<script type="text/javascript">
+			Calendar.setup({
+			inputField	 : "date_cycled_year",
+			baseField    : "element_7",
+			displayArea  : "calendar_7",
+			button		 : "cal_img_7",
+			ifFormat	 : "%B %e, %Y",
+			onSelect	 : selectDate
+			});
+		</script>
+		 
+		</li>		<li id="li_4" >
+		<label class="description" for="element_4">Date fish were added </label>
+		<span>
+			<input id="date_fished_day" name="date_fished_day" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_fished_day">MM</label>
+		</span>
+		<span>
+			<input id="date_fished_month" name="date_fished_month" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_fished_month">DD</label>
+		</span>
+		<span>
+	 		<input id="date_fished_year" name="date_fished_year" class="element text" size="4" maxlength="4" value="" type="text">
+			<label for="date_fished_year">YYYY</label>
+		</span>
+	
+		<span id="calendar_4">
+			<img id="cal_img_4" class="datepicker" src="calendar.gif" alt="Pick a date.">	
+		</span>
+		<script type="text/javascript">
+			Calendar.setup({
+			inputField	 : "date_fished_year",
+			baseField    : "element_4",
+			displayArea  : "calendar_4",
+			button		 : "cal_img_4",
+			ifFormat	 : "%B %e, %Y",
+			onSelect	 : selectDate
+			});
+		</script>
+		 
+		</li>		<li id="li_5" >
+		<label class="description" for="element_5">Date plants were added </label>
+		<span>
+			<input id="date_planted_day" name="date_planted_day" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_planted_day">MM</label>
+		</span>
+		<span>
+			<input id="date_planted_month" name="date_planted_month" class="element text" size="2" maxlength="2" value="" type="text"> /
+			<label for="date_planted_month">DD</label>
+		</span>
+		<span>
+	 		<input id="date_planted_year" name="date_planted_year" class="element text" size="4" maxlength="4" value="" type="text">
+			<label for="date_planted_year">YYYY</label>
+		</span>
+	
+		<span id="calendar_5">
+			<img id="cal_img_5" class="datepicker" src="calendar.gif" alt="Pick a date.">	
+		</span>
+		<script type="text/javascript">
+			Calendar.setup({
+			inputField	 : "date_planted_year",
+			baseField    : "element_5",
+			displayArea  : "calendar_5",
+			button		 : "cal_img_5",
+			ifFormat	 : "%B %e, %Y",
+			onSelect	 : selectDate
+			});
+		</script>
+		 
+		</li>		<li id="li_8" >
+		<label class="description" for="element_8">Options </label>
+		<span>
+			<input id="option_cycled" name="option_cycled" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_cycled">Cycled</label>
+<input id="option_heated" name="option_heated" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_heated">Heated</label>
+<input id="option_filtered" name="option_filtered" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_filtered">Filtered</label>
+<input id="option_fish" name="option_fish" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_fish">Fish</label>
+<input id="option_plants" name="option_plants" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_plants">Plants</label>
+<input id="option_substrate" name="option_substrate" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_substrate">Substrate</label>
+<input id="option_snails" name="option_snails" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_snails">Snails</label>
+<input id="option_shrimp" name="option_shrimp" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_shrimp">Shrimps</label>
+<input id="option_co2" name="option_co2" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_co2">CO2</label>
+<input id="option_ferts" name="option_ferts" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_ferts">Fertilizers</label>
+<input id="option_frogs" name="option_frogs" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_frogs">Frogs</label>
+<input id="option_reptiles" name="option_reptiles" class="element checkbox" type="checkbox" value="1" />
+<label class="choice" for="option_reptiles">Reptiles</label>
+
+		</span> 
+		</li>		<li id="li_6" >
+		<label class="description" for="tank_notes">Additional notes </label>
+		<div>
+			<textarea id="tank_notes" name="tank_notes" class="element textarea medium"></textarea> 
+		</div><p class="guidelines" id="guide_6"><small>Useful for identifying the tank, or listing anything not covered above in options.</small></p> 
+		</li>
+			
+					<li class="buttons">
+			    <input type="hidden" name="form_id" value="50219" />
+			    
+				<input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" />
+		</li>
+			</ul>
+		</form>	
+		<div id="footer">
+			Generated by <a href="http://www.phpform.org">pForm</a>
+		</div>
+	</div>
+	<img id="bottom" src="bottom.png" alt="">
+	</body>
+</html>

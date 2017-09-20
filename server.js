@@ -11,15 +11,13 @@ var express = require('express'); // app server
 var app = require('express')();
 var winston = require('winston');
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
 var util = require('util'); //Util for formatting output
 var bodyParser = require('body-parser'); // parser for post requests
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;  //used for sending POST requests
-io.path('/public');
-io.serveClient(true);
 require('dotenv').config({silent: true});
 
 var port = process.env.PORT || 3000;
+var fs = require('fs');
 
 //************************************************************
 //*******************Local libraries**************************
@@ -87,57 +85,113 @@ var conlogger = new (winston.Logger)({
   });
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/public/form.html');
+  res.sendFile(__dirname + '/public/login.html');
 });
 
+app.post('/login', function(req, res){
+	//console.log('Request: ' + JSON.stringify(req.body));
+	console.log('Authenticating user.');
+	if ((req.body.user_name == "Dramier") && (req.body.user_password == "test"))
+	{
+		console.log('Login accepted.');
+		res.sendFile(__dirname + '/public/intro.html');
+	}
+	else
+	{
+		console.log('Login denied.');
+		//console.log('Username: ' + req.body.user_name);
+		//console.log('Password: ' + req.body.user_password);
+		res.sendFile(__dirname + '/public/login.html');
+	}
+});
 
-io.close();
+app.get('/addtank', function(req, res){
+  res.sendFile(__dirname + '/public/addtank.html');
+});
 
-io.on('connection', function(socket){
+app.post('/addtank', function(req, res){
+	console.log('New Tank received: ');
+	console.log(JSON.stringify(req.body));
+
+	var userfile = 'our_tanklist.json';
+  
+  //open user name file
+	fs.appendFile(userfile, JSON.stringify(req.body), (err) => 
+	{
+		if (err) throw err;
+		console.log('Tank data saved');
+	});
 	
-  //************************************************************
-  //*******************Variables local to each client connection
-  //************************************************************
-  //-
-  //-
-  //-
+	//send user back to selection menu
+	res.sendFile(__dirname + '/public/intro.html');
+	
+});
 
+app.get('/tanks', function(req, res){
+  res.sendFile(__dirname + '/public/tanks.html');
+});
+
+app.post('/tanks', function(req, res){
+  console.log('Post recieved');
+  //console.log(req);
+  if (req.body.which_tank == 1)
+	  console.log('Tank: 20g Main');
+  if (req.body.which_tank == 2)
+	  console.log('Tank: Christine Tank');
+  if (req.body.which_tank == 3)
+	  console.log('Tank: Hatchery');
+  //console.log('Element 1: ' + req.body.element_1);
   
-  //-
-  //-
-  //-
-  //************************************************************
-  //*******************Variables local to each client connection
-  //************************************************************
+  /*
+  console.log('Date month: ' + req.body.date_month);
+  console.log('Date day: ' + req.body.date_day);
+  console.log('Date year: ' + req.body.date_year);
+  console.log('Date hour: ' + req.body.date_hour);
+  console.log('Date minute: ' + req.body.date_minute);
+  console.log('Date second: ' + req.body.date_seconds);
+  console.log('Date am/pm: ' + req.body.date_ampm);
+  console.log('Ammonia: ' + req.body.tank_ammonia);
+  console.log('PH: ' + req.body.tank_ph);
+  console.log('GH: ' + req.body.tank_gh);
+  console.log('KH: ' + req.body.tank_kh);
+  console.log('Nitrite: ' + req.body.tank_nitrite);
+  console.log('Nitrate: ' + req.body.tank_nitrate);
+  console.log('Temperature: ' + req.body.tank_temp + "F");
+  */
+	
+  //console.log('Rest of req: ');
+  //console.log(req.body);
   
-  socket.on('reconnect_attempt', function(){
-    errorlogger.log('info', 'user reconnected');
-  });
+  var userfile = 'our_tanks.json';
   
-  socket.on('connect', function(){
-    errorlogger.log('info', 'new user connected');
-	errorlogger.log('info', 'socket: ' + socket.client.id);
-	conlogger.log('info', 'Socket connected: ', socket.client.id);
-  });
-  
-  socket.on('disconnect', function(){
-    conlogger.log('info', 'Socket disconnected: ', socket.client.id);
-  });
-  
-  socket.on('chat message', function(msg)
+  //open user name file
+  fs.appendFile(userfile, JSON.stringify(req.body), (err) => 
   {
-	conlogger.log('info', ': Socket#', socket.client.id, ': Received message: ');//, msg);
-	//-
-	//-
-	//Parse the incoming message for use by Watson
+	if (err) throw err;
+	console.log('Tank data saved');
+	});
 	
-	//Password Authentication
-	//-
-	//-
-	
-  }); //end of socket
+	//send user back to selection menu
+	res.sendFile(__dirname + '/public/intro.html');
+  
+});
 
-}); //end of io.connection
+	
+  //************************************************************
+  //*******************Variables local to each client connection
+  //************************************************************
+  //-
+  //-
+  //-
+
+  
+  //-
+  //-
+  //-
+  //************************************************************
+  //*******************Variables local to each client connection
+  //************************************************************
+  
 
 
 http.listen(port, function(){
