@@ -134,10 +134,11 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		var socket = io();
-		socket.on('chat message', (msg) => 
-		{
-			Api.setResponsePayload(msg);
-		});
+		//var data = {"text" : "none"};
+		//socket.emit('chat message', data);
+			
+		
 	</script>
+	<script src="/handler.js"></script>
 	</body>
 </html>

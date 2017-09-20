@@ -11,11 +11,13 @@ var express = require('express'); // app server
 var app = require('express')();
 var winston = require('winston');
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var util = require('util'); //Util for formatting output
 var bodyParser = require('body-parser'); // parser for post requests
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;  //used for sending POST requests
 require('dotenv').config({silent: true});
-
+io.path('/public');
+io.serveClient(true);
 var port = process.env.PORT || 3000;
 var fs = require('fs');
 
@@ -64,23 +66,21 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 //setup the loggers
 var date = new Date();
-var logfilename = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay() + "-" + "debug.log";
-
 
 var errorlogger = new (winston.Logger)({
 	level: 'silly',
     transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: logfilename })
+      new (winston.transports.Console)()
+      
     ]
   });
 
-var confilename = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay() + "-" + "convos.log";  
+
 var conlogger = new (winston.Logger)({
 	level: 'silly',
     transports: [
-      new (winston.transports.Console)(),
-      new (winston.transports.File)({ filename: confilename })
+      new (winston.transports.Console)()
+      
     ]
   });
 
@@ -176,6 +176,20 @@ app.post('/tanks', function(req, res){
   
 });
 
+io.close();
+
+//need to load in the user database
+// Read Synchrously
+
+console.log("\n *START* \n");
+var userDatabase = fs.readFileSync("users.json");
+console.log("\n Reading in user database... \n");
+userDatabase = JSON.parse(userDatabase);
+userCount = userDatabase.Users.length;
+console.log('Number of users in database: ' + userCount);
+
+io.on('connection', function(socket){
+
 	
   //************************************************************
   //*******************Variables local to each client connection
@@ -183,7 +197,9 @@ app.post('/tanks', function(req, res){
   //-
   //-
   //-
-
+	var userAuth = false;
+	var userFile = null;
+	var userData = null;
   
   //-
   //-
@@ -192,7 +208,90 @@ app.post('/tanks', function(req, res){
   //*******************Variables local to each client connection
   //************************************************************
   
+socket.on('reconnect_attempt', function(){
+    errorlogger.log('info', 'user reconnected');
+  });
+  
+  socket.on('connect', function(){
+    errorlogger.log('info', 'new user connected');
+	errorlogger.log('info', 'socket: ' + socket.client.id);
+	conlogger.log('info', 'Socket connected: ', socket.client.id);
+  });
+  
+  socket.on('disconnect', function(){
+    conlogger.log('info', 'Socket disconnected: ', socket.client.id);
+  });
+  
+  socket.on('login', function(msg)
+  {
+	  //do something
+	  console.log("Received input msg: ");
+	  console.log(JSON.stringify(msg));
+	  
+	  if (userAuth == false)
+	  {
+		  if ((msg.user_name == 'Dramier') && (msg.user_password == 'test'))
+		  {
+			  userAuth = true;
+			  userFile = msg.user_name + ".tnk";
+			  if (fs.existsSync(userFile)) 
+			  {
+				userData = fs.readFileSync(userFile);
+			  }
+			  else
+			  {
+				  fs.writeFile(userFile, '', function (err) 
+				  {
+						if (err) return console.log(err);
+						console.log('Created new user file.');
+					});
 
+			  }
+			  
+			  console.log('Valid user detected!');
+			  //http.serveClient(__dirname + '/public/intro.html');
+			  socket.emit('move', 'do it');
+			  
+			  //res.sendFile(__dirname + '/public/intro.html');
+			  return;
+		  }
+		  else
+		  {
+			  //res.sendFile(__dirname + '/public/login.html');
+			  return;
+		  }
+		  
+	  }
+	  
+	  return;
+  });
+  
+  //do not modify this one - it's for copypasta
+  socket.on('template', function(msg)
+  {
+	  //do something
+	  console.log("Received input msg: ");
+	  console.log(JSON.stringify(msg));
+	  
+	  
+	  
+	  return;
+  });
+  
+  socket.on('add tank', function(msg)
+  {
+	  //do something
+	  console.log("Received input msg: ");
+	  console.log(JSON.stringify(msg));
+	  
+	  
+	  
+	  
+	  return;
+  });
+  
+ }); //end of io.connection
+  
 
 http.listen(port, function(){
   console.log('listening on *:' + port);

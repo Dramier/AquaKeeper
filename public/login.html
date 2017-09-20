@@ -44,5 +44,14 @@
 		</div>
 	</div>
 	<img id="bottom" src="bottom.png" alt="">
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+		socket.on('move', (msg) => 
+		{
+			document.location.href = "/intro.html";
+		});
+	</script>
+	<script src="/login_handler.js"></script>
 	</body>
 </html>
